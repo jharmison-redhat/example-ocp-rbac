@@ -1,0 +1,49 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: service-mesh-admin
+  annotations:
+    openshift.io/description: Allows for administration of all Istio resources
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - authentication.istio.io
+      - config.istio.io
+      - networking.istio.io
+      - rbac.istio.io
+      - security.istio.io
+      - authentication.maistra.io
+      - rbac.maistra.io
+    resources:
+      - '*'
+
+  - verbs:
+      - '*'
+    apiGroups:
+      - maistra.io
+    resources:
+      - servicemeshcontrolplanes
+      - servicemeshmemberrolls
+      - servicemeshmembers
+
+  - verbs:
+      - '*'
+    apiGroups:
+      - jaegertracing.io
+    resources:
+      - jaegers
+
+  - verbs:
+      - '*'
+    apiGroups:
+      - kiali.io
+    resources:
+      - kialis
+
+  - verbs:
+      - '*'
+    apiGroups:
+      - monitoring.kiali.io
+    resources:
+      - monitoringdashboards

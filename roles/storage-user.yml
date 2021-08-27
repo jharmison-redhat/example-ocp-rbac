@@ -1,0 +1,25 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: storage-admin
+  annotations:
+    openshift.io/description: Allows consumption of cluster storage resources
+rules:
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - objectbucket.io
+    resources:
+      - objectbucketclaims
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - objectbucket.io
+    resources:
+      - objectbuckets

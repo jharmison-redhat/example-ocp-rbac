@@ -1,0 +1,50 @@
+# I do not believe this role should exist in your current project-admin file
+# unless you are intending for project owners to be able to create new ceph
+# pools from scratch. It would make more sense for you to expose the CephCluster
+# or StorageCluster (if using OCS) resources for people building Ceph clusters,
+# or just PersistentVolumeClaim for people consuming platform-provided Ceph
+# clusters.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: storage-admin
+  annotations:
+    openshift.io/description: Allows administration of underlying storage objects
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - ceph.rook.io
+    resources:
+      - cephobjectrealms
+  - verbs:
+      - '*'
+    apiGroups:
+      - ceph.rook.io
+    resources:
+      - cephobjectzonegroups
+  - verbs:
+      - '*'
+    apiGroups:
+      - ceph.rook.io
+    resources:
+      - cephobjectzones
+  - verbs:
+      - '*'
+    apiGroups:
+      - ceph.rook.io
+    resources:
+      - cephrbdmirrors
+# This resource is for people who need to pool hardware block devices into new
+# PersistentVolumes and implies that the owner of this permission has a
+# significant amount of privilege to support block operations on metal. I
+# believe this should be done by someone pooling local storage together to form
+# distributed storage, or a storage admin who is providing consumable block
+# devices to a developer (rather than allowing them to self-service disks from
+# metal themselves)
+  - verbs:
+      - '*'
+    apiGroups:
+      - local.storage.openshift.io
+    resources:
+      - localvolumes

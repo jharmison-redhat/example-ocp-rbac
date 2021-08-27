@@ -1,0 +1,26 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-logging-admin
+  annotations:
+    openshift.io/description: Allows configuration of cluster-wide logging settings
+rules:
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - logging.openshift.io
+    resources:
+      - clusterloggings
+# I do not believe this does anything that you should be configuring:
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - logging.openshift.io
+    resources:
+      - collectors
